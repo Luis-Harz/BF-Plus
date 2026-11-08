@@ -19,7 +19,13 @@ char* file_buf;
 
 #define debug 0
 
-char* messages[] = {"Divine language", "No errors btw", "Brainfuck but better", "Really fast language!", "Called BF+ btw", "Want to main this language?",
+char* messages[] = {
+"Divine language",
+"No errors btw",
+"Brainfuck but better",
+"Really fast language!",
+"Called BF+ btw",
+"Want to main this language?",
 "Works as intended",
 "Skill issue",
 "Have you tried not making mistakes?",
