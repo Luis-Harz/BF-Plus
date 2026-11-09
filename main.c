@@ -170,6 +170,14 @@ int main(int argc, char* argv[]) {
 					if (program[pc] == '}') local_if_depth--;
 				}
 				break;
+			case '#':
+				;
+				int jmp_num = 0;
+				jmp_num += (program[pc] - '0') * 1000;
+				jmp_num += (program[pc] - '0') * 100;
+				jmp_num += (program[pc] - '0') * 10;
+				jmp_num += (program[pc] - '0');
+				pc = jmp_num - 1;
 			default:
 				;
 				//Nothing
