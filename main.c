@@ -96,7 +96,7 @@ long get_file_size(const char *filename) {
 int main(int argc, char* argv[]) {
 	printf("===Just wanna warn you: this language has no errors===\n");
 	srand(time(NULL) ^ getpid());
-	printf("Your random message: %s\n", messages[rand() % 57]);
+	printf("Your random message: %s\n", messages[rand() % 58]);
 	if (argc != 2) {
 		return 1;
 	}
