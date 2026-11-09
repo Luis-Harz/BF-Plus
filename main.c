@@ -178,6 +178,7 @@ int main(int argc, char* argv[]) {
 				jmp_num += (program[pc] - '0') * 10;
 				jmp_num += (program[pc] - '0');
 				pc = jmp_num - 1;
+				break;
 			default:
 				;
 				//Nothing
