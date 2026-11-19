@@ -22,6 +22,15 @@ XXX is the three digit cmp number(should be 0-255, everything else is useless).
 YYY is all the code ran when it is true(can also be longer than three chars).
 ZZZ is all the code ran when it is false.
 
+I also changed loops, you can still use them exactly like in standart brainfuck, but you can also do:
+```BF+
+[RCCCXXX]
+```
+
+R is reversed, it reverses the logic of the loop.
+CCC is the cmp num(standart would be 0).
+XXX is the code(can be longer than 3 characters).
+
 I also added jump.
 I know if + jump is like the same as a loop but still loops are shorter to do.
 
@@ -35,3 +44,6 @@ So this is a permanent loop.
 Which means the syntax for a jump is: #XXXX(Yes 4 digits).
 I know this hard caps code length to 10000 chars,
 but i don't think there ever will be anything longer than that.
+
+# Syntax highlighting
+In the repo there is [bfplus.vim](https://github.com/Luis-Harz/blob/main/bfplus.vim) which you can add.
