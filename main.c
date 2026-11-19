@@ -19,13 +19,20 @@ typedef struct {
 }loop_info_t;
 
 loop_info_t loop_infos[1024];
-int global_loop_depth = 0;
+int global_loop_depth = -1;
 
-#define DEBUG 0
+#define DEBUG 1
 
 void debug_print() {
 	printf(
-	"\033[33m=====DEBUG=====\nPC:                %d\n->Content:         %c\nPointer(absolute): 0x%08x\nPointer(relative): 0x%08x\n=====DEBUG=====\033[0m\n", pc, program[pc], pointer, pointer - tape_start);
+	"\033[33m=====DEBUG=====\n"
+	"PC:                %d\n"
+	"->Content:         %c\n"
+	"Pointer(absolute): 0x%08x\n"
+	"Pointer(relative): 0x%08x\n"
+	"Global IF depth:   %d\n"
+	"Global loop depth: %d\n"
+	"=====DEBUG=====\033[0m\n", pc, program[pc], pointer, pointer - tape_start, global_if_depth, global_loop_depth);
 }
 
 int main(int argc, char* argv[]) {
@@ -107,6 +114,7 @@ int main(int argc, char* argv[]) {
 				(*pointer) = getchar();
 				break;
 			case '[':
+				global_loop_depth++;
 				if (program[pc + 1] >= '0' && program[pc + 1] <= '9') {
 					loop_infos[global_loop_depth].reversed = program[pc + 1] - '0';
 					loop_infos[global_loop_depth].cmp_num = (program[pc + 2] - '0') * 100 + (program[pc + 3] - '0') * 10 + (program[pc + 4] - '0');
@@ -123,7 +131,6 @@ int main(int argc, char* argv[]) {
 						if (program[pc] == ']') depth--;
 					}
 				}
-				global_loop_depth++;
 				break;
 			case ']':
 				if (loop_infos[global_loop_depth].reversed ? loop_infos[global_loop_depth].cmp_num == (*pointer) : loop_infos[global_loop_depth].cmp_num != (*pointer)) {
@@ -133,8 +140,9 @@ int main(int argc, char* argv[]) {
 						if (program[pc] == ']') depth++;
 						if (program[pc] == '[') depth--;
 					}
+				} else {
+					global_loop_depth--;
 				}
-				global_loop_depth--;
 				break;
 			case '{':
 				;
