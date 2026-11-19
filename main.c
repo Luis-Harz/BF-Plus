@@ -4,7 +4,6 @@
 char* program;
 int pc = 0;
 
-int if_depth[1024];
 int else_id = 0;
 int global_if_depth = 0;
 
