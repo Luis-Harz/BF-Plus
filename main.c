@@ -13,6 +13,14 @@ uint8_t* tape_start = (uint8_t*)&tape;
 uint8_t* tape_end = (uint8_t*)&tape + (TAPE_SIZE - 1);
 uint8_t* pointer = (uint8_t*)&tape;
 
+typedef struct {
+	int reversed;
+	int cmp_num;
+}loop_info_t;
+
+loop_info_t loop_infos[1024];
+int global_loop_depth = 0;
+
 #define DEBUG 0
 
 void debug_print() {
@@ -99,7 +107,15 @@ int main(int argc, char* argv[]) {
 				(*pointer) = getchar();
 				break;
 			case '[':
-				if ((*pointer) == 0) {
+				if (program[pc + 1] >= '0' && program[pc + 1] <= '9') {
+					loop_infos[global_loop_depth].reversed = program[pc + 1] - '0';
+					loop_infos[global_loop_depth].cmp_num = (program[pc + 2] - '0') * 100 + (program[pc + 3] - '0') * 10 + (program[pc + 4] - '0');
+					pc += 4;
+				} else {
+					loop_infos[global_loop_depth].reversed = 0;
+					loop_infos[global_loop_depth].cmp_num = 0;
+				}
+				if (loop_infos[global_loop_depth].reversed ? loop_infos[global_loop_depth].cmp_num != (*pointer) : loop_infos[global_loop_depth].cmp_num == (*pointer)) {
 					int depth = 1;
 					while (depth != 0) {
 						pc++;
@@ -107,9 +123,10 @@ int main(int argc, char* argv[]) {
 						if (program[pc] == ']') depth--;
 					}
 				}
+				global_loop_depth++;
 				break;
 			case ']':
-				if ((*pointer) != 0) {
+				if (loop_infos[global_loop_depth].reversed ? loop_infos[global_loop_depth].cmp_num == (*pointer) : loop_infos[global_loop_depth].cmp_num != (*pointer)) {
 					int depth = 1;
 					while (depth != 0) {
 						pc--;
@@ -117,6 +134,7 @@ int main(int argc, char* argv[]) {
 						if (program[pc] == '[') depth--;
 					}
 				}
+				global_loop_depth--;
 				break;
 			case '{':
 				;
