@@ -159,7 +159,7 @@ int main(int argc, char* argv[]) {
 				}
 				break;
 			case '}':
-				global_if_depth++;
+				global_if_depth--;
 				break;
 			case ':':
 				;
