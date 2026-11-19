@@ -21,7 +21,7 @@ typedef struct {
 loop_info_t loop_infos[1024];
 int global_loop_depth = -1;
 
-#define DEBUG 1
+#define DEBUG 0
 
 void debug_print() {
 	printf(
