@@ -46,4 +46,4 @@ I know this hard caps code length to 10000 chars,
 but i don't think there ever will be anything longer than that.
 
 # Syntax highlighting
-In the repo there is [bfplus.vim](https://github.com/Luis-Harz/blob/main/bfplus.vim) which you can add.
+In the repo there is [bfplus.vim](https://github.com/Luis-Harz/BF-Plus/blob/main/bfplus.vim) which you can add.
